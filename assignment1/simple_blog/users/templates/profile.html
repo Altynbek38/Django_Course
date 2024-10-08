@@ -1,0 +1,43 @@
+{% extends 'master.html' %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+<h1> {{profile.user.username}}</h1>
+
+{% if profile.profile_picture %}
+<img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="">
+{% else %}
+    <p><strong> No Image </strong></p>
+{% endif %}
+
+{% if profile.bio %}
+<p>{{profile.bio}}</p>
+{% else %}
+    <p><strong> No Bio</strong></p>
+{% endif %}
+
+<h3>Followers: {{follower_cnt}}</h3>
+<h3>Followings: {{following_cnt}}</h3>
+
+{% if user == profile.user %}
+    <a href="{% url 'profile_edit' profile.user.id %}">Edit Profile</a>
+{% endif %}
+
+{% if user != profile.user %}
+  {% if not is_following %}
+    <form action="{% url 'follow_user' profile.user.id %}" method="POST">
+      {% csrf_token %}
+      <button type="submit">Follow</button>
+    </form>
+  {% else %}
+    <form action="{% url 'unfollow_user' profile.user.id %}" method="POST">
+      {% csrf_token %}
+      <button type="submit">Unfollow</button>
+    </form>
+  {% endif %}
+{% endif %}
+
+{% endblock %}

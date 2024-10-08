@@ -1,0 +1,16 @@
+{% extends 'master.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<h2>Profile Edit</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save changes</button>
+</form>
+{% endblock %}
